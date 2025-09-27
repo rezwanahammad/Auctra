@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Providers } from "./providers"; // ✅ import client-side wrapper
+import { Providers } from "./providers";
+import Navbar from "@/components/Navbar"; // ✅ import Navbar
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,9 +24,13 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* ✅ Now we wrap in client component */}
-        <Providers>{children}</Providers>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <Providers>
+          <Navbar /> {/* ✅ Show Navbar everywhere */}
+          <main className="p-4">{children}</main>
+        </Providers>
       </body>
     </html>
   );

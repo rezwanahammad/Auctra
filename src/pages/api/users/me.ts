@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 import { dbConnect } from "@/lib/db";
-import User from "@/app/models/User";
+import User from "@/models/User";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
@@ -15,7 +15,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   await dbConnect();
-  const user = await User.findById(session.user.id).select("-hashedPassword");
+  const userId = session.user?.id;
+  if (!userId) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  const user = await User.findById(userId).select("-hashedPassword");
 
   if (!user) {
     return res.status(404).json({ message: "User not found" });

@@ -6,7 +6,7 @@ loadEnv({ path: path.resolve(process.cwd(), ".env.local") });
 
 (async () => {
   const { dbConnect } = await import("../lib/db");
-  const { default: Category } = await import("../app/models/Category");
+  const { default: Category } = await import("../models/Category");
   try {
     await dbConnect();
     await Category.deleteMany({});
