@@ -42,7 +42,7 @@ const categories: Category[] = [
   },
   {
     name: "Toys & Collectibles",
-    slug: "toys-collectibles",
+    slug: "toys",
     image: "/images/toys.jpg",
     highlight: "Cellar selections",
   },
