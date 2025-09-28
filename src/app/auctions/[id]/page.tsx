@@ -1,14 +1,23 @@
 "use client";
 
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import useSWR from "swr";
+
+interface AuctionImage {
+  url: string;
+  alt?: string;
+}
 
 interface AuctionDetail {
   _id: string;
   title: string;
   description?: string;
   currentBid: number;
-  endTime: string;
+  startingPrice: number;
+  reservePrice?: number;
+  endTime?: string;
+  images?: AuctionImage[];
 }
 
 interface AuctionResponse {
@@ -27,12 +36,18 @@ export default function AuctionDetailPage() {
     fetcher
   );
 
-  if (!id) return <p>❌ Invalid auction id</p>;
-  if (error) return <p>❌ Failed to load auction</p>;
-  if (!data) return <p>⏳ Loading auction...</p>;
+  if (!id) return <p className="p-6">❌ Invalid auction id</p>;
+  if (error) return <p className="p-6">❌ Failed to load auction</p>;
+  if (!data) return <p className="p-6">⏳ Loading auction...</p>;
 
   const auction = data.auction;
-  if (!auction) return <p>❌ Auction not found</p>;
+  if (!auction) return <p className="p-6">❌ Auction not found</p>;
+
+  const primaryImage =
+    auction.images?.find((image) => image.url)?.url || "/images/hero-auction.png";
+  const formattedEndTime = auction.endTime
+    ? new Date(auction.endTime).toLocaleString()
+    : "Unknown";
 
   return (
     <div className="p-6">
@@ -40,8 +55,27 @@ export default function AuctionDetailPage() {
       <p>{auction.description}</p>
       <p className="mt-2">Current Bid: ${auction.currentBid}</p>
       <p className="mt-2 text-sm text-gray-500">
-        Ends: {new Date(auction.endTime).toLocaleString()}
+        Starting Price: ${auction.startingPrice}
       </p>
+      {auction.reservePrice && (
+        <p className="mt-2 text-sm text-gray-500">
+          Reserve Price: ${auction.reservePrice}
+        </p>
+      )}
+      <p className="mt-2 text-sm text-gray-500">
+        Ends: {formattedEndTime}
+      </p>
+
+      <div className="mt-4">
+        <Image
+          src={primaryImage}
+          alt={auction.title}
+          width={800}
+          height={450}
+          className="w-full max-h-[450px] rounded-lg object-cover"
+          unoptimized
+        />
+      </div>
 
       <div className="mt-4">
         <input

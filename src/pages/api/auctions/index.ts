@@ -29,24 +29,34 @@ async function createAuction(req: NextApiRequest, res: NextApiResponse) {
 
     await dbConnect();
 
-    const { title, description, categoryId, startingPrice, reservePrice, startTime, endTime, minIncrement, images } = req.body;
+    const {
+      title,
+      description,
+      categoryId,
+      startingPrice,
+      reservePrice,
+      startTime,
+      endTime,
+      minIncrement,
+      images,
+    } = req.body;
 
     if (!title || !categoryId || !startingPrice || !endTime) {
       return res.status(400).json({ message: "Missing required fields" });
     }
-const auction = await Auction.create({
-  title,
-  description,
-  categoryId: new Types.ObjectId(categoryId), // ✅ force convert
-  sellerId: session.user.id,
-  startingPrice,
-  reservePrice,
-  startTime,
-  endTime,
-  minIncrement,
-  images,
-  status: "active"
-});
+    const auction = await Auction.create({
+      title,
+      description,
+      categoryId: new Types.ObjectId(categoryId),
+      sellerId: session.user.id,
+      startingPrice,
+      reservePrice,
+      startTime,
+      endTime,
+      minIncrement,
+      images,
+      status: "active",
+    });
 
     return res.status(201).json({ message: "Auction created successfully", auction });
   } catch (error) {
@@ -56,11 +66,32 @@ const auction = await Auction.create({
 }
 
 
+type LeanAuction = {
+  _id: Types.ObjectId;
+  title: string;
+  description?: string;
+  currentBid?: number;
+  startingPrice: number;
+  reservePrice?: number;
+  status: string;
+  categoryId?: Types.ObjectId;
+  startTime?: Date;
+  endTime?: Date;
+  images?: { url?: string; alt?: string }[];
+};
+
 interface AuctionSummary {
   _id: string;
   title: string;
   description?: string;
   currentBid: number;
+  startingPrice: number;
+  reservePrice?: number;
+  status: string;
+  categoryId?: string;
+  startTime?: string;
+  endTime?: string;
+  images?: { url: string; alt?: string }[];
 }
 
 interface AuctionsResponse {
@@ -81,9 +112,26 @@ async function listAuctions(
 
     const auctions = await Auction.find(filter)
       .sort({ createdAt: -1 })
-      .lean<AuctionSummary[]>();
+      .lean<LeanAuction[]>();
 
-    return res.status(200).json({ auctions });
+    const formatted: AuctionSummary[] = auctions.map((auction) => ({
+      _id: auction._id.toString(),
+      title: auction.title,
+      description: auction.description,
+      currentBid: auction.currentBid ?? auction.startingPrice,
+      startingPrice: auction.startingPrice,
+      reservePrice: auction.reservePrice,
+      status: auction.status,
+      categoryId: auction.categoryId?.toString(),
+      startTime: auction.startTime?.toISOString(),
+      endTime: auction.endTime?.toISOString(),
+      images: auction.images?.map((image) => ({
+        url: image?.url ?? "",
+        alt: image?.alt,
+      })),
+    }));
+
+    return res.status(200).json({ auctions: formatted });
   } catch (error) {
     console.error("❌ Fetch auctions error:", error);
     return res.status(500).json({ message: "Internal server error" });
