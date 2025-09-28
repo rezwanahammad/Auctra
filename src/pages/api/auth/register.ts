@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
 
     if (!username || !email || !password) {
       return res.status(400).json({ message: "Missing required fields" });
@@ -26,12 +26,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // create user
+    // create user with buyer as default, seller if explicitly passed
     const newUser = await User.create({
       username,
       email,
       hashedPassword,
-      role: "buyer", // default role
+      role: role === "seller" ? "seller" : "buyer",
     });
 
     return res.status(201).json({

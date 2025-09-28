@@ -13,6 +13,7 @@ const AuctionSchema = new Schema({
   startingPrice: { type: Number, required: true },
   reservePrice: Number,
   currentBid: { type: Number, default: 0 },
+  highestBidderId: { type: Schema.Types.ObjectId, ref: "User" },
   status: { type: String, enum: ["draft", "pending", "active", "closed"], default: "draft" },
   startTime: Date,
   endTime: { type: Date, index: true },
