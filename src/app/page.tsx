@@ -13,17 +13,17 @@ const highlights = [
   {
     title: "Private Valuations",
     description:
-      "Confidential, specialist-led estimates for single works and entire estates.",
+      "Get confidential estimates for single items or entire collections, handled by specialists.",
   },
   {
     title: "Curated Curation",
     description:
-      "Lot storytelling, provenance sourcing, and editorial features for every release.",
+      "Every piece comes with its own story — from history and ownership to expert insights — so you know exactly what you’re bidding on.",
   },
   {
-    title: "Global Logistics",
+    title: "Global Delivery",
     description:
-      "White-glove shipping, climate control, and customs support from door to door.",
+      "Safe, careful shipping worldwide. We take care of packing, climate control, and customs, so your items arrive without worry.",
   },
 ];
 
@@ -48,16 +48,15 @@ export default function HomePage() {
         <div className="relative mx-auto flex min-h-[680px] max-w-6xl flex-col justify-center gap-10 px-6 py-24 sm:px-8 lg:px-10">
           <div className="max-w-3xl space-y-6 text-white">
             <p className="text-sm font-semibold uppercase tracking-[0.35em] text-white/70">
-              AUCTRA AUCTION SALONS
+              Welcome to Auctra
             </p>
             <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-              Discover extraordinary auctions curated for collectors and
-              creators worldwide
+              Discover unique auctions made for collectors and creators
             </h1>
             <p className="text-base text-white/80 sm:text-lg">
-              Bid live across fine art, rare jewelry, design, wine, and more.
-              Track market trends, engage with specialists, and secure
-              museum-worthy works from a single, trusted platform.
+              Join live auctions for art, jewelry, design, wine, and more.
+              Follow the latest trends, connect with experts, and find
+              one-of-a-kind pieces — all in one trusted place.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -97,16 +96,15 @@ export default function HomePage() {
         <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
           <div className="space-y-6">
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500 dark:text-slate-300">
-              WHY COLLECT WITH AUCTRA
+              Why Choose Auctra
             </p>
             <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              White-glove service from valuation to delivery
+              Personal service from start to finish
             </h2>
             <p className="text-base text-slate-600 dark:text-slate-300">
-              Every release is stewarded by category experts, from private
-              valuations to curated storytelling and global logistics. We pair
-              innovative bidding tools with boutique attention so your next
-              acquisition is effortless.
+              From pricing to delivery, our experts guide you every step of the
+              way. We make bidding simple with smart tools and attentive
+              support, so adding to your collection feels easy.
             </p>
 
             <div className="grid gap-4 sm:grid-cols-3">
@@ -136,10 +134,13 @@ export default function HomePage() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/0" />
             <div className="absolute bottom-6 left-6 right-6 text-white">
-              <h3 className="text-lg font-semibold">Upcoming Salon Preview</h3>
+              <h3 className="text-lg font-semibold">
+                Be the First to See What’s Next
+              </h3>
               <p className="text-sm text-white/80">
-                RSVP for a private walkthrough of our Modern Icons collection
-                before it goes live next week.
+                Join our exclusive preview sessions to get a closer look at
+                upcoming auctions, connect with experts, and discover standout
+                pieces before they go live.
               </p>
               <Link
                 href="/events"
