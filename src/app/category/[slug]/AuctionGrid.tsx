@@ -84,7 +84,11 @@ export default function AuctionGrid({ auctions, fallbackImage }: Props) {
 
     try {
       setLoadingId(auction.id);
-      setFeedback((prev) => ({ ...prev, [auction.id]: undefined }));
+      setFeedback((prev) => {
+        const next = { ...prev };
+        delete next[auction.id];
+        return next;
+      });
 
       const response = await fetch('/api/bids', {
         method: 'POST',
@@ -234,7 +238,11 @@ export default function AuctionGrid({ auctions, fallbackImage }: Props) {
                       type="button"
                       onClick={() => {
                         setActiveId(auction.id);
-                        setFeedback((prev) => ({ ...prev, [auction.id]: undefined }));
+                        setFeedback((prev) => {
+                          const next = { ...prev };
+                          delete next[auction.id];
+                          return next;
+                        });
                         setBidValues((prev) => ({
                           ...prev,
                           [auction.id]: String(minRequired),

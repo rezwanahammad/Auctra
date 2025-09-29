@@ -58,12 +58,42 @@ const currency = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
+const FALLBACK_CATEGORIES: Record<string, { name: string; description: string }> = {
+  furniture: {
+    name: "Furniture",
+    description:
+      "Explore statement furniture and decor, spanning mid-century icons to contemporary studio pieces.",
+  },
+  antiques: {
+    name: "Antiques",
+    description:
+      "Discover heritage objects with storied provenance, from early silver to classical sculpture.",
+  },
+  toys: {
+    name: "Toys & Collectibles",
+    description:
+      "Track pop culture, comics, and collectible design drops sourced from dedicated consignors.",
+  },
+};
+
 const getCategoryData = cache(async (slug: string): Promise<CategoryData | null> => {
   await dbConnect();
 
   const categoryDoc = await Category.findOne({ slug }).lean<LeanCategory | null>();
   if (!categoryDoc) {
-    return null;
+    const fallback = FALLBACK_CATEGORIES[slug];
+    if (!fallback) {
+      return null;
+    }
+    return {
+      category: {
+        id: `virtual-${slug}`,
+        name: fallback.name,
+        slug,
+        description: fallback.description,
+      },
+      auctions: [],
+    };
   }
 
   const auctions = await Auction.find({ categoryId: categoryDoc._id })
@@ -220,4 +250,3 @@ export default async function CategoryPage({
     </div>
   );
 }
-  const { AuctionGrid } = await import("./AuctionGrid");

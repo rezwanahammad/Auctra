@@ -32,19 +32,19 @@ const categories: Category[] = [
     name: "Furniture",
     slug: "furniture",
     image: "/images/furniture.jpg",
-    highlight: "Mid-century icons",
+    highlight: "Design & decor",
   },
   {
     name: "Antiques",
     slug: "antiques",
     image: "/images/antiques.jpeg",
-    highlight: "Pop culture rarities",
+    highlight: "Heritage objects",
   },
   {
     name: "Toys & Collectibles",
     slug: "toys",
     image: "/images/toys.jpg",
-    highlight: "Cellar selections",
+    highlight: "Pop culture icons",
   },
 ];
 
