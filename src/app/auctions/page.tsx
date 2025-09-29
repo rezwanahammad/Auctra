@@ -42,11 +42,7 @@ const STATUS_BADGE: Record<string, string> = {
 
 const EMPTY_AUCTIONS: AuctionListItem[] = [];
 
-const currency = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  maximumFractionDigits: 0,
-});
+const formatTaka = (value: number) => new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value) + "/-";
 
 function timeRemaining(endTime?: string) {
   if (!endTime) return "End date TBD";
@@ -190,7 +186,7 @@ export default function AuctionsPage() {
                   Bid volume
                 </dt>
                 <dd className="mt-3 text-3xl font-semibold text-slate-900 dark:text-white">
-                  {currency.format(heroStats.volume)}
+                  {formatTaka(heroStats.volume)}
                 </dd>
               </div>
             </dl>
@@ -314,10 +310,10 @@ export default function AuctionsPage() {
 
                       <div className="mt-auto space-y-2 text-sm font-medium">
                         <p className="text-base font-semibold">
-                          Current bid: {currency.format(auction.currentBid)}
+                          Current bid: {formatTaka(auction.currentBid)}
                         </p>
                         <div className="flex items-center justify-between text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                          <span>Starting at {currency.format(auction.startingPrice)}</span>
+                          <span>Starting at {formatTaka(auction.startingPrice)}</span>
                           <span>{timeRemaining(auction.endTime)}</span>
                         </div>
                       </div>
@@ -338,3 +334,4 @@ export default function AuctionsPage() {
     </div>
   );
 }
+
