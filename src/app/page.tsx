@@ -45,46 +45,48 @@ export default function HomePage() {
           <div className="pointer-events-none absolute -top-10 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-white/20 blur-3xl dark:bg-white/10" />
         </div>
 
-        <div className="relative mx-auto flex min-h-[680px] max-w-6xl flex-col justify-center gap-10 px-6 py-24 sm:px-8 lg:px-10">
-          <div className="max-w-3xl space-y-6 text-white">
-            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-white/70">
+        <div className="relative mx-auto flex min-h-[100vh] max-w-6xl flex-col justify-center gap-8 sm:gap-10 px-4 sm:px-6 py-20 sm:py-24 lg:px-10">
+          <div className="max-w-3xl space-y-4 sm:space-y-6 text-white">
+            <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.25em] sm:tracking-[0.35em] text-white/70 pt-4">
               Welcome to Auctra
             </p>
-            <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
               Discover unique auctions made for collectors and creators
             </h1>
-            <p className="text-base text-white/80 sm:text-lg">
+            <p className="text-sm sm:text-base lg:text-lg text-white/80 max-w-2xl">
               Join live auctions for art, jewelry, design, wine, and more.
               Follow the latest trends, connect with experts, and find
               one-of-a-kind pieces — all in one trusted place.
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
               <Link
                 href="/auctions"
-                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 shadow-lg shadow-slate-900/30 transition hover:-translate-y-0.5 hover:bg-slate-100"
+                className="rounded-full bg-white px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base font-semibold text-slate-900 shadow-lg shadow-slate-900/30 transition-all hover:-translate-y-0.5 hover:bg-slate-100 hover:shadow-xl text-center"
               >
                 Explore live auctions
               </Link>
               <Link
                 href="/sell"
-                className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10"
+                className="rounded-full border border-white/40 px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base font-semibold text-white transition-all hover:border-white hover:bg-white/10 hover:backdrop-blur-sm text-center"
               >
                 Consign a collection
               </Link>
             </div>
           </div>
 
-          <dl className="grid gap-4 text-white sm:grid-cols-2 lg:grid-cols-4">
+          <dl className="grid gap-3 sm:gap-4 text-white grid-cols-2 lg:grid-cols-4">
             {stats.map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur-sm"
+                className="rounded-xl sm:rounded-2xl border border-white/10 bg-white/10 p-4 sm:p-6 backdrop-blur-sm transition-all hover:bg-white/15"
               >
-                <dt className="text-xs uppercase tracking-widest text-white/60">
+                <dt className="text-[10px] sm:text-xs uppercase tracking-wider sm:tracking-widest text-white/60">
                   {stat.label}
                 </dt>
-                <dd className="mt-3 text-3xl font-semibold">{stat.value}</dd>
+                <dd className="mt-2 sm:mt-3 text-2xl sm:text-3xl font-semibold">
+                  {stat.value}
+                </dd>
               </div>
             ))}
           </dl>
