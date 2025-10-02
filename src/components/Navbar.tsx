@@ -16,6 +16,7 @@ import {
 
 const PRIMARY_LINKS = [
   { href: "/auctions", label: "Auctions" },
+  { href: "/categories", label: "Categories" },
   { href: "/buy", label: "Buy Now" },
   { href: "/private-sales", label: "Private" },
   { href: "/sell", label: "Sell" },

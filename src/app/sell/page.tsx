@@ -212,7 +212,7 @@ export default function SellerDashboardPage() {
   return (
     <main className="mx-auto max-w-4xl px-6 py-12 sm:px-8 lg:px-10">
       <div className="rounded-3xl border border-slate-200 bg-white/80 p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-        <h1 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-white">
+        <h1 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-white ">
           Create a new auction
         </h1>
         <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
