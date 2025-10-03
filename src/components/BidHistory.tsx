@@ -6,17 +6,18 @@ import { Clock, TrendingUp, Users } from "lucide-react";
 
 interface BidHistoryProps {
   auctionId: string;
-  refreshTrigger?: number; // Used to trigger refresh when new bids are placed
+  refreshTrigger?: number; // notun bid ashle refresh trigger kore
 }
 
 export default function BidHistory({
   auctionId,
   refreshTrigger,
 }: BidHistoryProps) {
-  const [bids, setBids] = useState<BidHistoryItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [bids, setBids] = useState<BidHistoryItem[]>([]); // storing all the bids
+  const [isLoading, setIsLoading] = useState(true); // check if the loading is in progress
   const [error, setError] = useState<string | null>(null);
 
+  //to get the history of the bids
   const loadBidHistory = useCallback(async () => {
     try {
       setError(null);
@@ -111,6 +112,7 @@ export default function BidHistory({
           <p className="text-sm">Be the first to make an offer!</p>
         </div>
       ) : (
+        //if there are bids then it will show here as a list
         <div className="space-y-3 max-h-80 overflow-y-auto">
           {bids.map((bid, index) => (
             <div
@@ -122,6 +124,7 @@ export default function BidHistory({
               }`}
             >
               <div className="flex items-center gap-3">
+                {/* first letter of bidder's name */}
                 <div
                   className={`h-8 w-8 rounded-full flex items-center justify-center text-sm font-semibold ${
                     index === 0
@@ -164,6 +167,7 @@ export default function BidHistory({
         </div>
       )}
 
+        {/*manually added refresh button */}
       {bids.length > 0 && (
         <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
           <button

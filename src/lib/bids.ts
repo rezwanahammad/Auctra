@@ -84,7 +84,7 @@ export async function fetchBidHistory(auctionId: string): Promise<BidHistoryResp
  * Format price for display
  */
 export function formatPrice(price: number): string {
-  return new Intl.NumberFormat('bn-BD', {
+  return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'BDT',
   }).format(price);
@@ -114,7 +114,7 @@ export function formatTimeRemaining(endTime: string | Date): string {
 
   if (diff <= 0) return 'Auction ended';
 
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24)); //1 second = 1000 ms
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 

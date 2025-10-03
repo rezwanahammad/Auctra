@@ -1,72 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    try {
-      const res = await axios.post("/api/auth/register", {
-        username,
-        email,
-        password,
-      });
-      if (res.status === 201) {
-        router.push("/auth/signin");
-      }
-    } catch (err: unknown) {
-      const message = axios.isAxiosError(err)
-        ? err.response?.data?.message ?? "Something went wrong"
-        : "Something went wrong";
-      setError(message);
-    }
-  };
+  useEffect(() => {
+    // Redirect to the unified auth page
+    router.replace("/auth/signin");
+  }, [router]);
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-6 rounded shadow-md w-96"
-      >
-        <h2 className="text-xl mb-4 font-bold">Register</h2>
-        {error && <p className="text-red-500 mb-2">{error}</p>}
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="border p-2 w-full mb-2"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="border p-2 w-full mb-2"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="border p-2 w-full mb-4"
-        />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded w-full"
-        >
-          Register
-        </button>
-      </form>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center">
+      <div className="animate-pulse text-center">
+        <div className="text-2xl font-semibold text-slate-700 dark:text-slate-300 mb-2">
+          Redirecting...
+        </div>
+        <div className="text-slate-500 dark:text-slate-400">
+          Taking you to the sign-up page
+        </div>
+      </div>
     </div>
   );
 }

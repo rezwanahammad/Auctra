@@ -325,7 +325,7 @@ function DetailRow({
   bold?: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between">
+    <dl className="flex items-center justify-between">
       <dt className="font-medium text-slate-500 dark:text-slate-400">
         {label}
       </dt>
@@ -338,7 +338,7 @@ function DetailRow({
       >
         {value}
       </dd>
-    </div>
+    </dl>
   );
 }
 

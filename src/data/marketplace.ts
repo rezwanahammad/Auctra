@@ -48,13 +48,13 @@ export function canBuyNow(auction: AuctionItem): boolean {
 }
 
 export function getBuyNowPrice(auction: AuctionItem): number {
-  // For Buy Now, use reserve price if set, otherwise current bid + 20%
+  // For Buy Now, use reserve price if set, otherwise current bid + 40%
   if (auction.reservePrice) {
     return auction.reservePrice;
   }
   
   const currentPrice = auction.currentBid || auction.startingPrice;
-  return Math.round(currentPrice * 1.2); // 20% above current bid
+  return Math.round(currentPrice * 1.4); // 40% above current bid
 }
 
 export function formatAuctionForBuyNow(auction: AuctionItem) {

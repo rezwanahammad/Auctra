@@ -87,6 +87,7 @@ export function useOutbidNotification({ auctionId, userId }: UseOutbidNotificati
   const [lastHighestBidderId, setLastHighestBidderId] = useState<string | null>(null);
   const [wasOutbid, setWasOutbid] = useState(false);
 
+  //check if user has been outbid=
   const checkOutbidStatus = useCallback(async () => {
     if (!userId) return;
 
