@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 import { dbConnect } from "@/lib/db";
 import Auction from "@/models/Auction";
+// Import Category to ensure mongoose registration
+import "@/models/Category";
 import { Types } from "mongoose";
 
 

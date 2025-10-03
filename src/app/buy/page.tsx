@@ -1,26 +1,27 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { getAuctionsForBuyNow } from "@/data/marketplace";
+import BuyNowModal from "@/components/BuyNowModal";
 import { ShoppingCart, Heart, MapPin, Star } from "lucide-react";
 
-export const metadata = {
-  title: "Buy Now | Auctra - Immediate Purchase Available",
-  description:
-    "Skip the auction and buy immediately. Discover authenticated art, jewelry, watches, and collectibles ready for immediate purchase.",
-};
-
 function formatPrice(price: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(price);
+  return `৳${price.toLocaleString()}`;
 }
 
 type FormattedAuctionItem = ReturnType<
   typeof import("@/data/marketplace").formatAuctionForBuyNow
 >;
 
-function ItemCard({ item }: { item: FormattedAuctionItem }) {
+function ItemCard({
+  item,
+  onBuyNow,
+}: {
+  item: FormattedAuctionItem;
+  onBuyNow: (item: FormattedAuctionItem) => void;
+}) {
   const hasDiscount = item.originalPrice && item.originalPrice > item.price;
   const discountPercent = hasDiscount
     ? Math.round(
@@ -88,15 +89,15 @@ function ItemCard({ item }: { item: FormattedAuctionItem }) {
         </div>
 
         <div className="flex gap-2">
-          <Link
-            href={`/buy/${item.id}`}
+          <button
+            onClick={() => onBuyNow(item)}
             className="flex-1 rounded-full bg-slate-900 py-2 px-4 text-center text-sm font-semibold text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
           >
             Buy Now
-          </Link>
+          </button>
           <button
             className="rounded-full border border-slate-200 p-2 text-slate-600 transition hover:bg-slate-50 hover:border-slate-300 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800"
-            aria-label="Add to cart"
+            aria-label="Add to favorites"
           >
             <ShoppingCart className="h-4 w-4" />
           </button>
@@ -106,40 +107,93 @@ function ItemCard({ item }: { item: FormattedAuctionItem }) {
   );
 }
 
-export default async function BuyNowPage() {
-  const buyNowItems = await getAuctionsForBuyNow();
+export default function BuyNowPage() {
+  const [items, setItems] = useState<FormattedAuctionItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedItem, setSelectedItem] = useState<FormattedAuctionItem | null>(
+    null
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    // Set document title for client component
+    document.title = "Buy Now | Auctra - Immediate Purchase Available";
+
+    async function fetchItems() {
+      try {
+        const fetchedItems = await getAuctionsForBuyNow();
+        setItems(fetchedItems);
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchItems();
+  }, []);
+
+  const handleBuyNow = (item: FormattedAuctionItem) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedItem(null);
+    // Refresh items to update availability
+    getAuctionsForBuyNow().then(setItems).catch(console.error);
+  };
 
   const categories = [
-    { name: "All", slug: "all", count: buyNowItems.length },
+    { name: "All", slug: "all", count: items.length },
     {
       name: "Fine Art",
       slug: "fine-art",
-      count: buyNowItems.filter(
+      count: items.filter(
         (i: FormattedAuctionItem) => i.category === "fine-art"
       ).length,
     },
     {
       name: "Jewelry",
       slug: "jewelry",
-      count: buyNowItems.filter(
-        (i: FormattedAuctionItem) => i.category === "jewelry"
-      ).length,
+      count: items.filter((i: FormattedAuctionItem) => i.category === "jewelry")
+        .length,
     },
     {
       name: "Watches",
       slug: "watches",
-      count: buyNowItems.filter(
-        (i: FormattedAuctionItem) => i.category === "watches"
-      ).length,
+      count: items.filter((i: FormattedAuctionItem) => i.category === "watches")
+        .length,
     },
     {
       name: "Furniture",
       slug: "furniture",
-      count: buyNowItems.filter(
+      count: items.filter(
         (i: FormattedAuctionItem) => i.category === "furniture"
       ).length,
     },
   ];
+
+  if (isLoading) {
+    return (
+      <main className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-white text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100 pt-20">
+        <div className="mx-auto max-w-6xl px-6 py-16 text-center">
+          <div className="animate-pulse space-y-4">
+            <div className="h-8 bg-slate-200 rounded w-64 mx-auto dark:bg-slate-700"></div>
+            <div className="h-4 bg-slate-200 rounded w-96 mx-auto dark:bg-slate-700"></div>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-8">
+              {[...Array(8)].map((_, i) => (
+                <div
+                  key={i}
+                  className="bg-slate-200 rounded-2xl h-96 dark:bg-slate-700"
+                ></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-white text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100 pt-20">
@@ -177,7 +231,7 @@ export default async function BuyNowPage() {
       <section className="mx-auto max-w-6xl px-6 py-12 sm:px-8 lg:px-10">
         <div className="mb-6 flex items-center justify-between">
           <p className="text-sm text-slate-600 dark:text-slate-400">
-            {buyNowItems.length} items available
+            {items.length} items available
           </p>
           <select
             className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300"
@@ -191,12 +245,27 @@ export default async function BuyNowPage() {
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {buyNowItems.map((item: FormattedAuctionItem) => (
-            <ItemCard key={item.id} item={item} />
+          {items.map((item: FormattedAuctionItem) => (
+            <ItemCard key={item.id} item={item} onBuyNow={handleBuyNow} />
           ))}
         </div>
 
-        {buyNowItems.length === 0 && (
+        {/* Buy Now Modal */}
+        {selectedItem && (
+          <BuyNowModal
+            isOpen={isModalOpen}
+            onClose={handleModalClose}
+            item={{
+              id: selectedItem.id,
+              title: selectedItem.title,
+              images: selectedItem.images,
+              buyNowPrice: selectedItem.buyNowPrice || selectedItem.price,
+              seller: selectedItem.seller,
+            }}
+          />
+        )}
+
+        {items.length === 0 && !isLoading && (
           <div className="py-16 text-center">
             <div className="mx-auto h-24 w-24 rounded-full bg-slate-100 flex items-center justify-center mb-4 dark:bg-slate-800">
               <ShoppingCart className="h-8 w-8 text-slate-400" />

@@ -2,6 +2,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { Types } from "mongoose";
 import { dbConnect } from "@/lib/db";
 import Auction from "@/models/Auction";
+// Import Category to ensure mongoose registration
+import "@/models/Category";
 
 type LeanAuction = {
   _id: Types.ObjectId;

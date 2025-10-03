@@ -3,6 +3,8 @@ import { Types } from "mongoose";
 import { dbConnect } from "@/lib/db";
 import Category from "@/models/Category";
 import Auction from "@/models/Auction";
+// Ensure User model is also registered for seller population
+import "@/models/User";
 
 type LeanCategory = {
   _id: Types.ObjectId;

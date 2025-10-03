@@ -24,11 +24,13 @@ import { Gavel, TrendingUp, Clock, Users, AlertCircle } from "lucide-react";
 interface BiddingPanelProps {
   auction: FormattedAuctionItem;
   onBidSuccess?: (refreshTrigger: number) => void;
+  onBuyNow?: () => void;
 }
 
 export default function BiddingPanel({
   auction,
   onBidSuccess,
+  onBuyNow,
 }: BiddingPanelProps) {
   const { data: session } = useSession();
   const [bidAmount, setBidAmount] = useState("");
@@ -207,9 +209,12 @@ export default function BiddingPanel({
                   )}
                 </button>
 
-                {auction.buyNowPrice && (
-                  <button className="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 hover:border-slate-300 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">
-                    Buy Now
+                {auction.canBuyNow && onBuyNow && (
+                  <button
+                    onClick={onBuyNow}
+                    className="rounded-full border border-green-200 bg-green-50 px-4 py-2 text-sm font-medium text-green-700 transition hover:bg-green-100 hover:border-green-300 dark:border-green-700 dark:bg-green-900/20 dark:text-green-300 dark:hover:bg-green-900/40"
+                  >
+                    Buy Now: ৳{auction.buyNowPrice?.toLocaleString()}
                   </button>
                 )}
               </div>
