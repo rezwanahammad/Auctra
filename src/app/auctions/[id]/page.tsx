@@ -5,7 +5,8 @@ import Image from "next/image";
 import { dbConnect } from "@/lib/db";
 import Auction from "@/models/Auction";
 import Bid from "@/models/Bid";
-import BidPanel from "../BidPanel";
+
+import AuctionPageClient from "@/app/auctions/[id]/AuctionPageClient";
 
 type LeanAuctionDoc = {
   _id: Types.ObjectId;
@@ -266,14 +267,7 @@ export default async function AuctionDetailPage({
       </section>
 
       <section className="mx-auto max-w-6xl px-6 pb-16 sm:px-8 lg:px-10">
-        <BidPanel
-          auctionId={auction.id}
-          currentBid={auction.currentBid}
-          startingPrice={auction.startingPrice}
-          minIncrement={auction.minIncrement}
-          status={auction.status}
-          endTime={auction.endTime}
-        />
+        <AuctionPageClient auction={auction} />
       </section>
 
       <section className="mx-auto max-w-6xl px-6 pb-20 sm:px-8 lg:px-10">
