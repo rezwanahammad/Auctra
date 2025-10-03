@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import {
   ArrowRight,
   Heart,
@@ -12,13 +13,24 @@ import {
   Search,
   ShoppingBag,
   X,
+  Clock,
 } from "lucide-react";
+
+interface SearchResult {
+  id: string;
+  title: string;
+  description: string;
+  startingPrice: number;
+  currentBid: number;
+  status: string;
+  images: Array<{ url: string; alt?: string }>;
+  category: { name: string; slug: string } | null;
+}
 
 const PRIMARY_LINKS = [
   { href: "/auctions", label: "Auctions" },
   { href: "/categories", label: "Categories" },
   { href: "/buy", label: "Buy Now" },
-  { href: "/private-sales", label: "Private" },
   { href: "/sell", label: "Sell" },
   { href: "/stories", label: "Stories" },
 ];
@@ -36,7 +48,11 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
   const accountMenuRef = useRef<HTMLDivElement | null>(null);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   // close on escape
   useEffect(() => {
@@ -47,6 +63,52 @@ export default function Navbar() {
     document.addEventListener("keydown", handleKeydown);
     return () => document.removeEventListener("keydown", handleKeydown);
   }, [isSearchOpen]);
+
+  // Focus search input when modal opens
+  useEffect(() => {
+    if (isSearchOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [isSearchOpen]);
+
+  // Search function with debouncing
+  const performSearch = useCallback(async (query: string) => {
+    if (query.trim().length < 2) {
+      setSearchResults([]);
+      return;
+    }
+
+    setIsSearching(true);
+    try {
+      const response = await fetch(
+        `/api/search?q=${encodeURIComponent(query.trim())}&limit=8`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setSearchResults(data.results || []);
+      } else {
+        setSearchResults([]);
+      }
+    } catch (error) {
+      console.error("Search error:", error);
+      setSearchResults([]);
+    } finally {
+      setIsSearching(false);
+    }
+  }, []);
+
+  // Debounced search effect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (searchQuery.trim()) {
+        performSearch(searchQuery);
+      } else {
+        setSearchResults([]);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery, performSearch]);
 
   // close account menu on outside click
   useEffect(() => {
@@ -317,6 +379,134 @@ export default function Navbar() {
                     className="flex items-center justify-center rounded-full border border-slate-300 bg-white/50 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-800/50 dark:text-slate-300 dark:hover:bg-slate-700 transition-all"
                   >
                     Sell with Auctra
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Search Modal */}
+      {isSearchOpen && (
+        <div className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm">
+          <div className="flex min-h-screen items-start justify-center p-4 pt-[10vh]">
+            <div className="w-full max-w-2xl rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-slate-700 dark:bg-slate-900">
+              {/* Search Header */}
+              <div className="border-b border-slate-200 p-4 dark:border-slate-700">
+                <div className="flex items-center gap-3">
+                  <Search className="h-5 w-5 text-slate-400" />
+                  <input
+                    ref={searchInputRef}
+                    type="text"
+                    placeholder="Search auctions, categories, or items..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="flex-1 bg-transparent text-lg font-medium text-slate-900 placeholder-slate-500 outline-none dark:text-slate-100 dark:placeholder-slate-400"
+                  />
+                  <button
+                    onClick={() => setIsSearchOpen(false)}
+                    className="rounded-full p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+                    aria-label="Close search"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Search Results */}
+              <div className="max-h-96 overflow-y-auto">
+                {isSearching ? (
+                  <div className="flex items-center justify-center p-8">
+                    <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400">
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-slate-600"></div>
+                      <span>Searching...</span>
+                    </div>
+                  </div>
+                ) : searchQuery.trim().length < 2 ? (
+                  <div className="p-8 text-center">
+                    <Search className="mx-auto h-12 w-12 text-slate-300 dark:text-slate-600" />
+                    <p className="mt-4 text-slate-500 dark:text-slate-400">
+                      Start typing to search for auctions, items, or categories
+                    </p>
+                  </div>
+                ) : searchResults.length > 0 ? (
+                  <div className="divide-y divide-slate-200 dark:divide-slate-700">
+                    {searchResults.map((result) => (
+                      <Link
+                        key={result.id}
+                        href={`/auctions/${result.id}`}
+                        onClick={() => setIsSearchOpen(false)}
+                        className="flex items-center gap-4 p-4 transition hover:bg-slate-50 dark:hover:bg-slate-800"
+                      >
+                        <div className="relative h-12 w-12 overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800">
+                          {result.images && result.images.length > 0 ? (
+                            <Image
+                              src={result.images[0].url}
+                              alt={result.images[0].alt || result.title}
+                              fill
+                              className="object-cover"
+                            />
+                          ) : (
+                            <div className="flex h-full items-center justify-center">
+                              <Search className="h-4 w-4 text-slate-400" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-medium text-slate-900 dark:text-slate-100 truncate">
+                            {result.title}
+                          </h3>
+                          <div className="flex items-center gap-2 mt-1">
+                            {result.category && (
+                              <span className="text-xs text-slate-500 dark:text-slate-400">
+                                {result.category.name}
+                              </span>
+                            )}
+                            <span className="text-xs text-slate-400">•</span>
+                            <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                              {result.currentBid > 0
+                                ? `Current: $${result.currentBid.toLocaleString()}`
+                                : `Starting: $${result.startingPrice.toLocaleString()}`}
+                            </span>
+                            {result.status === "active" && (
+                              <>
+                                <span className="text-xs text-slate-400">
+                                  •
+                                </span>
+                                <span className="inline-flex items-center gap-1 text-xs text-green-600 dark:text-green-400">
+                                  <Clock className="h-3 w-3" />
+                                  Live
+                                </span>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="p-8 text-center">
+                    <Search className="mx-auto h-12 w-12 text-slate-300 dark:text-slate-600" />
+                    <p className="mt-4 text-slate-500 dark:text-slate-400">
+                      No results found for &ldquo;{searchQuery}&rdquo;
+                    </p>
+                    <p className="mt-2 text-sm text-slate-400">
+                      Try different keywords or browse our categories
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Quick Actions */}
+              {searchResults.length > 0 && (
+                <div className="border-t border-slate-200 p-4 dark:border-slate-700">
+                  <Link
+                    href={`/search?q=${encodeURIComponent(searchQuery)}`}
+                    onClick={() => setIsSearchOpen(false)}
+                    className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-200 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                  >
+                    View all results for &ldquo;{searchQuery}&rdquo;
                   </Link>
                 </div>
               )}
