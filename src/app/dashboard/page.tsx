@@ -37,11 +37,18 @@ async function getUserDashboardData(userId: string) {
     .sort({ createdAt: -1 })
     .limit(5);
 
-  // Calculate won auctions (auctions where user is highest bidder and auction ended)
+  // Calculate won auctions (auctions where user has the highest bid)
   const wonAuctions = await Auction.countDocuments({
     highestBidderId: userId,
-    status: "ended",
   });
+
+  // Get recent won auctions with details (where user has highest bid)
+  const recentWonAuctions = await Auction.find({
+    highestBidderId: userId,
+  })
+    .populate("categoryId", "name slug")
+    .sort({ updatedAt: -1 })
+    .limit(5);
 
   // For sellers, get their auctions
   let sellerStats = null;
@@ -54,7 +61,7 @@ async function getUserDashboardData(userId: string) {
     const soldItems = await Auction.countDocuments({
       sellerId: userId,
       status: "ended",
-      highestBidderId: { $exists: true },
+      winnerId: { $exists: true },
     });
 
     sellerStats = { totalListings, activeListings, soldItems };
@@ -88,6 +95,14 @@ async function getUserDashboardData(userId: string) {
       amount: bid.bidAmount,
       status: bid.auctionId?.status === "active" ? "active" : "ended",
       timestamp: bid.createdAt.toISOString(),
+    })),
+    recentWonAuctions: recentWonAuctions.map((auction) => ({
+      id: auction._id.toString(),
+      title: auction.title,
+      winningBid: auction.currentBid,
+      category: auction.categoryId?.name || "Uncategorized",
+      endedAt: auction.endTime?.toISOString(),
+      images: auction.images,
     })),
   };
 }
@@ -199,7 +214,7 @@ export default async function DashboardPage() {
                       {stats.wonAuctions}
                     </p>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Won Auctions
+                      Leading Bids
                     </p>
                   </div>
                 </div>
@@ -359,6 +374,68 @@ export default async function DashboardPage() {
                     </div>
                   )}
                 </div>
+              </div>
+            </div>
+
+            {/* Recent Won Auctions */}
+            <div className="mt-8 rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+              <div className="border-b border-slate-200 p-6 dark:border-slate-700">
+                <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
+                  Leading Bids
+                </h2>
+              </div>
+              <div className="p-6">
+                <div className="space-y-4">
+                  {dashboardData.recentWonAuctions.length > 0 ? (
+                    dashboardData.recentWonAuctions.map((auction) => (
+                      <div
+                        key={auction.id}
+                        className="flex items-center justify-between p-4 rounded-xl border border-slate-100 dark:border-slate-800"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="rounded-full bg-green-100 p-2 dark:bg-green-900/30">
+                            <Crown className="h-4 w-4 text-green-600 dark:text-green-400" />
+                          </div>
+                          <div>
+                            <p className="font-medium text-slate-900 dark:text-slate-100">
+                              {auction.title}
+                            </p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400">
+                              {auction.category} •{" "}
+                              {formatDate(auction.endedAt || "")}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-semibold text-green-600 dark:text-green-400">
+                            {formatPrice(auction.winningBid || 0)}
+                          </p>
+                          <span className="inline-block rounded-full px-2 py-1 text-xs font-medium bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+                            Leading
+                          </span>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-8">
+                      <Crown className="h-12 w-12 text-slate-300 dark:text-slate-600 mx-auto mb-4" />
+                      <p className="text-slate-500 dark:text-slate-400">
+                        No won auctions yet. Keep bidding to win!
+                      </p>
+                    </div>
+                  )}
+                </div>
+                {dashboardData.recentWonAuctions.length > 0 && (
+                  <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <Link
+                      href="/dashboard/won"
+                      className="flex w-full items-center justify-center gap-2 rounded-full border border-slate-200 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                    >
+                      <Crown className="h-4 w-4" />
+                      View All Won Auctions
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -14,11 +14,14 @@ const AuctionSchema = new Schema({
   reservePrice: Number,
   currentBid: { type: Number, default: 0 },
   highestBidderId: { type: Schema.Types.ObjectId, ref: "User" },
-  status: { type: String, enum: ["draft", "pending", "active", "closed"], default: "draft" },
+  winnerId: { type: Schema.Types.ObjectId, ref: "User" },
+  status: { type: String, enum: ["draft", "pending", "active", "ended", "cancelled"], default: "draft" },
   startTime: Date,
   endTime: { type: Date, index: true },
   minIncrement: { type: Number, default: 0 },
   images: [ImageSchema],
+  endedAt: Date,
+  winningBid: Number,
 }, { timestamps: true });
 
 export default models.Auction || model("Auction", AuctionSchema);
