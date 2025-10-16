@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import useSWR from "swr";
+import FavoriteButton from "@/components/FavoriteButton";
 
 interface AuctionListItem {
   _id: string;
@@ -35,14 +36,19 @@ const SORT_OPTIONS = [
 ];
 
 const STATUS_BADGE: Record<string, string> = {
-  active: "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-200",
-  pending: "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-200",
-  closed: "bg-slate-200 text-slate-700 dark:bg-slate-500/20 dark:text-slate-200",
+  active:
+    "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-200",
+  pending:
+    "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-200",
+  closed:
+    "bg-slate-200 text-slate-700 dark:bg-slate-500/20 dark:text-slate-200",
 };
 
 const EMPTY_AUCTIONS: AuctionListItem[] = [];
 
-const formatTaka = (value: number) => new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value) + "/-";
+const formatTaka = (value: number) =>
+  new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value) +
+  "/-";
 
 function timeRemaining(endTime?: string) {
   if (!endTime) return "End date TBD";
@@ -76,7 +82,7 @@ function AuctionCardSkeleton() {
 export default function AuctionsPage() {
   const { data, error } = useSWR<{ auctions: AuctionListItem[] }>(
     "/api/auctions",
-    fetcher,
+    fetcher
   );
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
@@ -121,7 +127,9 @@ export default function AuctionsPage() {
   }, [auctions, searchTerm, statusFilter, sortOption]);
 
   const heroStats = useMemo(() => {
-    const totalActive = auctions.filter((auction) => auction.status === "active");
+    const totalActive = auctions.filter(
+      (auction) => auction.status === "active"
+    );
     return {
       total: auctions.length,
       active: totalActive.length,
@@ -130,7 +138,7 @@ export default function AuctionsPage() {
   }, [auctions]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-white text-slate-900 transition-colors duration-300 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-white text-slate-900 transition-colors duration-300 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100 mt-8">
       <section className="relative overflow-hidden">
         <div className="absolute -left-12 top-16 h-64 w-64 rounded-full bg-purple-400/30 blur-3xl dark:bg-purple-500/20" />
         <div className="absolute right-0 top-36 hidden h-72 w-72 rounded-full bg-cyan-300/30 blur-3xl dark:block" />
@@ -146,7 +154,8 @@ export default function AuctionsPage() {
               </h1>
               <p className="text-base text-slate-600 dark:text-slate-300 sm:text-lg">
                 Analyse live bidding, explore provenance-rich lots, and secure
-                rare pieces from the world&apos;s leading sellers—all in one curated marketplace.
+                rare pieces from the world&apos;s leading sellers—all in one
+                curated marketplace.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link
@@ -261,18 +270,23 @@ export default function AuctionsPage() {
               {!isLoading && filteredAuctions.length === 0 && (
                 <div className="col-span-full flex flex-col items-center gap-3 rounded-2xl border border-dashed border-slate-200 bg-slate-50 py-16 text-center text-slate-500 dark:border-slate-700 dark:bg-slate-800/40 dark:text-slate-300">
                   <span className="text-3xl">🧭</span>
-                  <p className="text-base font-semibold">No auctions match your filters yet</p>
+                  <p className="text-base font-semibold">
+                    No auctions match your filters yet
+                  </p>
                   <p className="max-w-md text-sm">
-                    Try adjusting your filters or check back soon—new catalogues drop each week.
+                    Try adjusting your filters or check back soon—new catalogues
+                    drop each week.
                   </p>
                 </div>
               )}
 
               {filteredAuctions.map((auction) => {
                 const badgeClass =
-                  STATUS_BADGE[auction.status] ?? "bg-slate-200 text-slate-700 dark:bg-slate-700/50 dark:text-slate-200";
+                  STATUS_BADGE[auction.status] ??
+                  "bg-slate-200 text-slate-700 dark:bg-slate-700/50 dark:text-slate-200";
                 const imageSrc =
-                  auction.images?.find((image) => image.url)?.url || "/images/hero-auction.png";
+                  auction.images?.find((image) => image.url)?.url ||
+                  "/images/hero-auction.png";
 
                 return (
                   <Link
@@ -294,6 +308,15 @@ export default function AuctionsPage() {
                       >
                         {auction.status.toUpperCase()}
                       </span>
+
+                      {/* Favorite Heart Button */}
+                      <div className="absolute right-4 top-4 z-10">
+                        <FavoriteButton
+                          auctionId={auction._id}
+                          size="md"
+                          className="bg-white/80 hover:bg-white shadow-lg backdrop-blur-sm border border-white/20 text-slate-700 hover:text-red-500 dark:bg-slate-900/80 dark:hover:bg-slate-900 dark:text-slate-300 dark:hover:text-red-400 dark:border-slate-700/50"
+                        />
+                      </div>
                     </div>
 
                     <div className="flex flex-1 flex-col gap-4 p-5 text-slate-900 dark:text-slate-100">
@@ -313,7 +336,9 @@ export default function AuctionsPage() {
                           Current bid: {formatTaka(auction.currentBid)}
                         </p>
                         <div className="flex items-center justify-between text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                          <span>Starting at {formatTaka(auction.startingPrice)}</span>
+                          <span>
+                            Starting at {formatTaka(auction.startingPrice)}
+                          </span>
                           <span>{timeRemaining(auction.endTime)}</span>
                         </div>
                       </div>
@@ -328,10 +353,10 @@ export default function AuctionsPage() {
 
       {error && (
         <div className="mx-auto max-w-4xl rounded-2xl border border-red-200 bg-red-50 p-6 text-center text-red-800 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-200">
-          Unable to load auctions right now. Please refresh the page or try again later.
+          Unable to load auctions right now. Please refresh the page or try
+          again later.
         </div>
       )}
     </div>
   );
 }
-

@@ -50,9 +50,14 @@ type CategoryData = {
   }>;
 };
 
-const formatTaka = (value: number) => new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value) + "/-";
+const formatTaka = (value: number) =>
+  new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value) +
+  "/-";
 
-const FALLBACK_CATEGORIES: Record<string, { name: string; description: string }> = {
+const FALLBACK_CATEGORIES: Record<
+  string,
+  { name: string; description: string }
+> = {
   furniture: {
     name: "Furniture",
     description:
@@ -70,55 +75,61 @@ const FALLBACK_CATEGORIES: Record<string, { name: string; description: string }>
   },
 };
 
-const getCategoryData = cache(async (slug: string): Promise<CategoryData | null> => {
-  await dbConnect();
+const getCategoryData = cache(
+  async (slug: string): Promise<CategoryData | null> => {
+    await dbConnect();
 
-  const categoryDoc = await Category.findOne({ slug }).lean<LeanCategory | null>();
-  if (!categoryDoc) {
-    const fallback = FALLBACK_CATEGORIES[slug];
-    if (!fallback) {
-      return null;
+    const categoryDoc = await Category.findOne({
+      slug,
+    }).lean<LeanCategory | null>();
+    if (!categoryDoc) {
+      const fallback = FALLBACK_CATEGORIES[slug];
+      if (!fallback) {
+        return null;
+      }
+      return {
+        category: {
+          id: "virtual-" + slug,
+          name: fallback.name,
+          slug,
+          description: fallback.description,
+        },
+        auctions: [],
+      };
     }
+
+    const auctions = await Auction.find({ categoryId: categoryDoc._id })
+      .sort({ endTime: 1 })
+      .lean<LeanAuction[]>();
+
     return {
       category: {
-        id: "virtual-" + slug,
-        name: fallback.name,
-        slug,
-        description: fallback.description,
+        id: categoryDoc._id.toString(),
+        name: categoryDoc.name,
+        slug: categoryDoc.slug,
+        description: categoryDoc.description,
       },
-      auctions: [],
+      auctions: auctions.map((auction) => ({
+        id: auction._id.toString(),
+        title: auction.title,
+        description: auction.description,
+        startingPrice: auction.startingPrice,
+        currentBid: auction.currentBid ?? auction.startingPrice,
+        reservePrice: auction.reservePrice,
+        status: auction.status,
+        startTime: auction.startTime
+          ? auction.startTime.toISOString()
+          : undefined,
+        endTime: auction.endTime ? auction.endTime.toISOString() : undefined,
+        images: auction.images?.map((image) => ({
+          url: image?.url ?? "",
+          alt: image?.alt,
+        })),
+        minIncrement: auction.minIncrement ?? 1,
+      })),
     };
   }
-
-  const auctions = await Auction.find({ categoryId: categoryDoc._id })
-    .sort({ endTime: 1 })
-    .lean<LeanAuction[]>();
-
-  return {
-    category: {
-      id: categoryDoc._id.toString(),
-      name: categoryDoc.name,
-      slug: categoryDoc.slug,
-      description: categoryDoc.description,
-    },
-    auctions: auctions.map((auction) => ({
-      id: auction._id.toString(),
-      title: auction.title,
-      description: auction.description,
-      startingPrice: auction.startingPrice,
-      currentBid: auction.currentBid ?? auction.startingPrice,
-      reservePrice: auction.reservePrice,
-      status: auction.status,
-      startTime: auction.startTime ? auction.startTime.toISOString() : undefined,
-      endTime: auction.endTime ? auction.endTime.toISOString() : undefined,
-      images: auction.images?.map((image) => ({
-        url: image?.url ?? "",
-        alt: image?.alt,
-      })),
-      minIncrement: auction.minIncrement ?? 1,
-    })),
-  };
-});
+);
 
 export async function generateMetadata({
   params,
@@ -135,7 +146,9 @@ export async function generateMetadata({
     title: data.category.name + " auctions | Auctra",
     description:
       data.category.description ??
-      "Explore curated " + data.category.name.toLowerCase() + " auctions on Auctra.",
+      "Explore curated " +
+        data.category.name.toLowerCase() +
+        " auctions on Auctra.",
   };
 }
 
@@ -150,17 +163,22 @@ export default async function CategoryPage({
   }
 
   const { category, auctions } = data;
-  const activeAuctions = auctions.filter((auction) => auction.status === "active");
-  const endedAuctions = auctions.filter((auction) => auction.status !== "active");
+  const activeAuctions = auctions.filter(
+    (auction) => auction.status === "active"
+  );
+  const endedAuctions = auctions.filter(
+    (auction) => auction.status !== "active"
+  );
   const totalVolume = activeAuctions.reduce(
     (sum, auction) => sum + auction.currentBid,
-    0,
+    0
   );
-  const heroImage = auctions.find((auction) => auction.images?.[0]?.url)?.images?.[0]?.url;
+  const heroImage = auctions.find((auction) => auction.images?.[0]?.url)
+    ?.images?.[0]?.url;
   const fallbackImage = "/images/hero-auction.png";
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-white text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-white text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100 mt-8">
       <section className="relative mx-auto grid max-w-6xl gap-8 px-6 py-16 sm:px-8 lg:grid-cols-[minmax(0,380px)_1fr] lg:px-10">
         <div className="rounded-3xl border border-slate-200 bg-white/80 p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-slate-500 dark:text-slate-400">
@@ -216,7 +234,10 @@ export default async function CategoryPage({
         </div>
       </section>
 
-      <section id="catalogues" className="mx-auto max-w-6xl px-6 pb-20 sm:px-8 lg:px-10">
+      <section
+        id="catalogues"
+        className="mx-auto max-w-6xl px-6 pb-20 sm:px-8 lg:px-10"
+      >
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">
@@ -241,4 +262,3 @@ export default async function CategoryPage({
     </div>
   );
 }
-
