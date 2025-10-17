@@ -167,7 +167,6 @@ export default function FavoritesPage() {
             Back to Home
           </Link>
           <div className="flex items-center gap-3 mb-2">
-            <Heart className="h-8 w-8 text-red-500 fill-red-500" />
             <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
               My Favorites
             </h1>
@@ -288,7 +287,7 @@ export default function FavoritesPage() {
           </div>
         ) : (
           <div className="text-center py-16">
-            <Heart className="h-16 w-16 text-slate-300 dark:text-slate-600 mx-auto mb-6" />
+            <div className="h-16 w-16 text-slate-300 dark:text-slate-600 mx-auto mb-6" />
             <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">
               No Favorites Yet
             </h2>

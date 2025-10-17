@@ -282,7 +282,7 @@ export default function AdminManagementPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 mt-8">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 mt-20">
       {/* Header */}
       <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
         <div className="max-w-7xl mx-auto px-6 py-8">

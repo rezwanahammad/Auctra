@@ -5,16 +5,16 @@ import Stories from "@/components/Stories";
 
 const stats = [
   { label: "Auctions launched", value: "2025" },
-  { label: "Registered bidders", value: "229" },
-  { label: "Lots sold", value: "137" },
-  { label: "Countries served", value: "9" },
+  { label: "Registered bidders", value: "229+" },
+  { label: "Lots sold", value: "137+" },
+  { label: "Countries served", value: "9+" },
 ];
 
 const highlights = [
   {
     title: "Private Valuations",
     description:
-      "Get confidential estimates for single items or entire collections, handled by specialists.",
+      "Get estimate value for single items or entire collections, handled by specialists.",
   },
   {
     title: "Curated Curation",
@@ -22,9 +22,9 @@ const highlights = [
       "Every piece comes with its own story — from history and ownership to expert insights — so you know exactly what you’re bidding on.",
   },
   {
-    title: "Global Delivery",
+    title: "Quick Delivery",
     description:
-      "Safe, careful shipping worldwide. We take care of packing, climate control, and customs, so your items arrive without worry.",
+      "Safe, careful shipping. We take care of packing and customs, so your items arrive without any delay.",
   },
 ];
 
@@ -48,16 +48,16 @@ export default function HomePage() {
 
         <div className="relative mx-auto flex min-h-[100vh] max-w-6xl flex-col justify-center gap-8 sm:gap-10 px-4 sm:px-6 py-20 sm:py-24 lg:px-10">
           <div className="max-w-3xl space-y-4 sm:space-y-6 text-white">
-            <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.25em] sm:tracking-[0.35em] text-white/70 pt-4">
+            <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.25em] sm:tracking-[0.35em] text-white/70 pt-3">
               Welcome to Auctra
             </p>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
               Discover unique auctions made for collectors and creators
             </h1>
             <p className="text-sm sm:text-base lg:text-lg text-white/80 max-w-2xl">
-              Join live auctions for art, jewelry, design, wine, and more.
-              Follow the latest trends, connect with experts, and find
-              one-of-a-kind pieces — all in one trusted place.
+              View & join live auctions for art, jewelry, fine-art, antiques and
+              more. Follow the latest trends, connect with experts, and find
+              one-of-a-kind pieces.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
@@ -80,7 +80,7 @@ export default function HomePage() {
             {stats.map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-xl sm:rounded-2xl border border-white/10 bg-white/10 p-4 sm:p-6 backdrop-blur-sm transition-all hover:bg-white/15"
+                className="rounded-xl sm:rounded-2xl border border-white/10 bg-white/10 p-4 sm:p-6 transition-all hover:bg-white/15"
               >
                 <dt className="text-[10px] sm:text-xs uppercase tracking-wider sm:tracking-widest text-white/60">
                   {stat.label}
@@ -141,9 +141,8 @@ export default function HomePage() {
                 Be the First to See What’s Next
               </h3>
               <p className="text-sm text-white/80">
-                Join our exclusive preview sessions to get a closer look at
-                upcoming auctions, connect with experts, and discover standout
-                pieces before they go live.
+                Join preview sessions to get a closer look at upcoming auctions
+                and discover standout pieces before they go live.
               </p>
               <Link
                 href="/events"
