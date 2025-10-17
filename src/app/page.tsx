@@ -4,10 +4,10 @@ import BrowseCategories from "@/components/BrowseCategories";
 import Stories from "@/components/Stories";
 
 const stats = [
-  { label: "Auctions launched", value: "2.3k" },
-  { label: "Registered bidders", value: "18k" },
-  { label: "Lots sold", value: "31.4k" },
-  { label: "Countries served", value: "47" },
+  { label: "Auctions launched", value: "2025" },
+  { label: "Registered bidders", value: "229" },
+  { label: "Lots sold", value: "137" },
+  { label: "Countries served", value: "9" },
 ];
 
 const highlights = [
@@ -98,9 +98,9 @@ export default function HomePage() {
       <section className="mx-auto max-w-6xl px-6 py-16 sm:px-8 lg:px-10">
         <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
           <div className="space-y-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500 dark:text-slate-300">
+            {/* <p className="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500 dark:text-slate-300">
               Why Choose Auctra
-            </p>
+            </p> */}
             <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
               Personal service from start to finish
             </h2>
@@ -163,34 +163,6 @@ export default function HomePage() {
 
       {/* Stories */}
       <Stories />
-
-      {/* CTA */}
-      <section className="mx-auto max-w-6xl px-6 py-20 text-center sm:px-8 lg:px-10">
-        <div className="rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-10 text-white shadow-xl dark:from-white dark:via-white dark:to-slate-200 dark:text-slate-900">
-          <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Ready to release your collection to the world?
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base text-white/80 dark:text-slate-700">
-            Join thousands of sellers leveraging Auctra&apos;s marketing reach
-            and secure handling to deliver works to passionate buyers across 47
-            countries.
-          </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-4">
-            <Link
-              href="/sell"
-              className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 shadow-lg shadow-slate-900/30 transition hover:-translate-y-0.5 hover:bg-slate-100 dark:bg-slate-900 dark:text-white dark:shadow-none dark:hover:bg-slate-800"
-            >
-              Start a consignment
-            </Link>
-            <Link
-              href="/contact"
-              className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10 dark:border-slate-400 dark:text-slate-900 dark:hover:bg-white"
-            >
-              Speak with a specialist
-            </Link>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }

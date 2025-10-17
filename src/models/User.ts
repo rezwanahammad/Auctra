@@ -103,8 +103,6 @@ const UserSchema = new Schema<IUser>(
 );
 
 // Indexes for performance
-UserSchema.index({ email: 1 });
-UserSchema.index({ username: 1 });
 UserSchema.index({ role: 1, isActive: 1 });
 UserSchema.index({ createdAt: -1 });
 

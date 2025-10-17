@@ -31,12 +31,11 @@ const PRIMARY_LINKS = [
   { href: "/auctions", label: "Auctions" },
   { href: "/categories", label: "Categories" },
   { href: "/buy", label: "Buy Now" },
-  { href: "/sell", label: "Sell" },
+  { href: "/about", label: "About" },
   { href: "/stories", label: "Stories" },
 ];
 
 const SECONDARY_LINKS = [
-  { href: "/about", label: "About" },
   { href: "/services", label: "Support" },
   { href: "/finance", label: "Finance" },
 ];
@@ -146,12 +145,12 @@ export default function Navbar() {
 
   const navClasses = isHome
     ? "fixed inset-x-0 top-0 z-50 bg-white/5 backdrop-blur-md border-b border-white/10 transition-all duration-300"
-    : "fixed inset-x-0 top-0 z-50 bg-white/95 shadow-sm backdrop-blur-xl border-b border-slate-200/20 dark:bg-slate-950/95 dark:border-slate-800/20";
+    : " fixed inset-x-0 top-0 z-50 bg-white/95 shadow-sm backdrop-blur-xl border-b border-slate-200/20 dark:bg-slate-950/95 dark:border-slate-800/20";
 
   return (
     <>
       <nav className={navClasses}>
-        <div className="mx-auto flex h-16 sm:h-20 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
+        <div className="mx-auto flex h-16 sm:h-20 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo */}
           <Link
             href="/"
@@ -214,19 +213,6 @@ export default function Navbar() {
             >
               <Heart className="h-5 w-5" />
             </Link>
-
-            <Link
-              href="/cart"
-              className={`p-2 rounded-full transition-all ${
-                isHome
-                  ? "text-white/80 hover:bg-white/10 hover:text-white"
-                  : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-              }`}
-              aria-label="View cart"
-            >
-              <ShoppingBag className="h-5 w-5" />
-            </Link>
-
             <Link
               href="/sell"
               className={`rounded-full px-4 py-2 text-sm font-semibold shadow transition-all ${
@@ -236,7 +222,6 @@ export default function Navbar() {
               }`}
             >
               <span className="hidden xl:inline">Sell with Auctra</span>
-              <span className="xl:hidden">Sell</span>
             </Link>
 
             {session ? (
