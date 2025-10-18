@@ -44,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     });
   } catch (error) {
-    console.error("❌ Registration error:", error);
+    console.error("Registration error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 }

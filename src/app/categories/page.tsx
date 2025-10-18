@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata = {
   title: "Categories | Auctra - Curated Auction Categories",
   description:
-    "Browse our curated auction categories including fine art, jewelry, watches, furniture, antiques, and collectibles. Discover unique pieces across all disciplines.",
+    "Browse our curated auction categories including fine art, jewelry, watches, furniture, antiques. Discover unique pieces across all disciplines.",
 };
 
 export default function CategoriesPage() {
@@ -20,9 +20,9 @@ export default function CategoriesPage() {
             Explore Our Auction Categories
           </h1>
           <p className="mx-auto mt-6 max-w-3xl text-lg text-slate-600 dark:text-slate-300">
-            From fine art to collectibles, discover extraordinary pieces across
-            our carefully curated categories. Each auction features expertly
-            authenticated items with detailed provenance and condition reports.
+            From fine art to antiques, discover extraordinary pieces across
+            our categories. Each auction features expertly
+            authenticated items with origin and condition reports.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link

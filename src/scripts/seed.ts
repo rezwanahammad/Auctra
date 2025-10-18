@@ -15,10 +15,10 @@ loadEnv({ path: path.resolve(process.cwd(), ".env.local") });
       { name: "Jewelry", slug: "jewelry" },
       { name: "Watches", slug: "watches" }
     ]);
-    console.log("✅ Categories seeded");
+    console.log("Categories seeded");
     process.exit(0);
   } catch (error) {
-    console.error("❌ Failed to seed:", error);
+    console.error("Failed to seed:", error);
     process.exit(1);
   }
 })();

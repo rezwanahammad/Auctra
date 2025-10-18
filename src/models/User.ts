@@ -57,7 +57,7 @@ const UserSchema = new Schema<IUser>(
       lowercase: true,
       trim: true
     },
-    hashedPassword: { type: String }, // ✅ used for login
+    hashedPassword: { type: String }, 
     role: { 
       type: String, 
       enum: ["buyer", "seller", "admin", "expert"], 

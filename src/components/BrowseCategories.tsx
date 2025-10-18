@@ -63,8 +63,8 @@ export default function BrowseCategories() {
             </h2>
             <p className="text-base text-slate-600 dark:text-slate-300">
               Follow the momentum across our most requested categories. Each
-              catalogue is refreshed weekly with private consignments and
-              specialist discoveries.
+              catalogue is reviewed with private consignments and specialist
+              discoveries.
             </p>
           </div>
           <Link
@@ -97,6 +97,7 @@ export default function BrowseCategories() {
                     <span>{String(index + 1).padStart(2, "0")}</span>
                     <span>{category.highlight}</span>
                   </div>
+
                   <div className="space-y-3">
                     <h3 className="text-2xl font-semibold leading-tight">
                       {category.name}

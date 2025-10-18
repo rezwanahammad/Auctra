@@ -210,7 +210,7 @@ export default function SellerDashboardPage() {
   }
 
   return (
-    <main className="mx-auto max-w-4xl px-6 py-12 sm:px-8 lg:px-10">
+    <main className="mx-auto max-w-4xl px-6 py-12 sm:px-8 lg:px-10 mt-16">
       <div className="rounded-3xl border border-slate-200 bg-white/80 p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
         <h1 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-white ">
           Create a new auction
@@ -400,4 +400,3 @@ function LinkButton({ href, children }: { href: string; children: ReactNode }) {
     </a>
   );
 }
-

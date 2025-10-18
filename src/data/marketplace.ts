@@ -64,7 +64,7 @@ export function formatAuctionForBuyNow(auction: AuctionItem) {
     description: auction.description || '',
     images: auction.images?.map(img => img.url || '') || ['/images/placeholder.jpg'],
     category: auction.categoryId?.slug || 'general',
-    condition: 'good', // Default condition - you can add this field to your auction model
+    condition: 'good', // Default condition
     price: getBuyNowPrice(auction),
     originalPrice: auction.reservePrice,
     currentBid: auction.currentBid || auction.startingPrice,
@@ -73,19 +73,19 @@ export function formatAuctionForBuyNow(auction: AuctionItem) {
     startingBid: auction.startingPrice,
     reservePrice: auction.reservePrice,
     buyNowPrice: getBuyNowPrice(auction),
-    bidders: 0, // Default - you can enhance this with actual bid count
+    bidders: 0, // Default - 
     seller: {
       id: auction.sellerId?._id || '',
       name: auction.sellerId?.username || 'Anonymous Seller',
-      rating: 4.5, // Default rating - you can enhance this with actual seller data
-      totalSales: 0 // Default - you can enhance this with actual seller data
+      rating: 4.5, // Default rating 
+      totalSales: 0 // Default
     },
     status: auction.status,
     canBuyNow: canBuyNow(auction),
     endTime: auction.endTime,
-    location: 'Location not specified', // You can add location field to your auction model
-    shippingCost: 50, // Default shipping - you can add this to your auction model
-    // Optional fields that might not be in your auction model yet
+    location: 'Location not specified', 
+    shippingCost: 150, // Default shipping 
+    // Optional fields
     material: undefined as string | undefined,
     dimensions: undefined as string | undefined,
     yearMade: undefined as string | undefined,
@@ -96,7 +96,6 @@ export function formatAuctionForBuyNow(auction: AuctionItem) {
 }
 
 // API functions to fetch auction data for Buy Now functionality
-// These will work with your existing auction API endpoints
 
 export async function getAuctionsForBuyNow() {
   try {

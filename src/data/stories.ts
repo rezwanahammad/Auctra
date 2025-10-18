@@ -1,4 +1,4 @@
-// Stories data structure
+
 export interface Story {
   id: string;
   slug: string;
@@ -35,15 +35,15 @@ export const stories: Story[] = [
     content: `
 # The Renaissance panel that tripled its estimate
 
-When Maria Gonzalez brought us what appeared to be a damaged 16th-century panel painting, she had modest expectations. The work, inherited from her grandmother, had been stored in an attic for decades, its surface darkened by age and neglect.
+When Maria brought us what appeared to be a damaged 16th-century panel painting, she had modest expectations. The work, inherited from her grandmother, had been stored in an attic for decades, its surface darkened by age and neglect.
 
 ## Initial Assessment
 
-Our specialists immediately recognized the quality of the underlying brushwork, despite the painting's poor condition. The composition, featuring a Madonna and Child, showed characteristics consistent with the Venetian school of the late Renaissance.
+Our team immediately recognized the quality of the underlying brushwork, despite the painting's poor condition. The composition, featuring a Madonna and Child, showed characteristics consistent with the Venetian school of the late Renaissance.
 
 ## The Investigation Begins
 
-Dr. Elena Rossi, our Head of Old Master Paintings, initiated a comprehensive authentication process:
+Dr. Elena, our Head of Old Master Paintings, initiated a comprehensive authentication process:
 
 - **Technical analysis**: X-ray imaging revealed earlier compositions beneath the surface
 - **Pigment analysis**: Confirmed the use of period-appropriate materials
@@ -74,7 +74,7 @@ This case demonstrates the importance of professional evaluation for inherited a
     id: "2",
     slug: "collector-journey",
     title: "From inheritance to investment: A collector's journey",
-    excerpt: "Meet Robert Chen, who transformed his grandfather's modest collection into a curated portfolio of contemporary art.",
+    excerpt: "Meet Chowdhury Chen, who transformed his grandfather's modest collection into a curated portfolio of contemporary art.",
     category: "Collector Profile",
     tags: ["collector", "contemporary", "investment", "strategy"],
     coverImage: "/images/jewelry.webp",
@@ -86,31 +86,31 @@ This case demonstrates the importance of professional evaluation for inherited a
     content: `
 # From inheritance to investment: A collector's journey
 
-Robert Chen never expected to become a serious art collector. When his grandfather passed away five years ago, Robert inherited a modest collection of mid-century ceramics and a few landscape paintings.
+Chowdhury never expected to become a serious art collector. When his grandfather passed away five years ago, Chowdhury inherited a modest collection of mid-century ceramics and a few landscape paintings.
 
 ## The Awakening
 
-"I was going to sell everything," Robert admits. "But my wife suggested we get them appraised first." That appraisal changed everything. One of the ceramics was by a renowned studio artist, worth significantly more than expected.
+"I was going to sell everything," Chowdhury admits. "But my wife suggested we get them appraised first." That appraisal changed everything. One of the ceramics was by a renowned studio artist, worth significantly more than expected.
 
 ## Building Knowledge
 
-Rather than selling immediately, Robert began researching. He attended gallery openings, read auction catalogs, and most importantly, started asking questions. "I realized collecting wasn't just about buying things you like – it's about understanding context, provenance, and market dynamics."
+Rather than selling immediately, Chowdhury began researching. He attended gallery openings, read auction catalogs, and most importantly, started asking questions. "I realized collecting wasn't just about buying things you like – it's about understanding context, provenance, and market dynamics."
 
 ## Strategic Collecting
 
-Over the next three years, Robert carefully sold pieces from his inherited collection and reinvested in contemporary works. His focus: emerging artists from his region with strong gallery representation.
+Over the next three years, Chowdhury carefully sold pieces from his inherited collection and reinvested in contemporary works. His focus: emerging artists from his region with strong gallery representation.
 
 "I learned to look for artists who were having museum shows, not just commercial success," he explains. "Long-term value comes from art historical significance."
 
 ## The Portfolio Approach
 
-Today, Robert's collection has grown to over 40 pieces, with works ranging from $2,000 to $25,000. His strategy combines emotional connection with market analysis.
+Today, Chowdhury's collection has grown to over 40 pieces, with works ranging from $2,000 to $25,000. His strategy combines emotional connection with market analysis.
 
 "Every piece should speak to you personally, but you also need to understand why others might value it in the future."
 
 ## Advice for New Collectors
 
-Robert's recommendations for those starting their collecting journey:
+Chowdhury's recommendations for those starting their collecting journey:
 
 1. **Start small**: Buy what you love within your budget
 2. **Educate yourself**: Visit museums, read, attend talks
