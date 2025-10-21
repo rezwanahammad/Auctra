@@ -49,7 +49,7 @@ async function placeBid(req: NextApiRequest, res: NextApiResponse) {
 
     const minRequired = (auction.currentBid || auction.startingPrice) + (auction.minIncrement || 1);
     if (bidAmount < minRequired) {
-      return res.status(400).json({ message: `Bid must be at least ${minRequired}` });
+      return res.status(400).json({ message: `Bid must be at least ৳${minRequired}` });
     }
 
     // Save the bid

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-// Sample stories data - you can move this to a separate data file later
+
 const stories = [
   {
     id: "1",

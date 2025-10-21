@@ -54,7 +54,7 @@ export function getBuyNowPrice(auction: AuctionItem): number {
   }
   
   const currentPrice = auction.currentBid || auction.startingPrice;
-  return Math.round(currentPrice * 1.4); // 40% above current bid
+  return Math.round(currentPrice * 3); // 3x above current bid
 }
 
 export function formatAuctionForBuyNow(auction: AuctionItem) {

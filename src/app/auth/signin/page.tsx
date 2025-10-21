@@ -107,15 +107,10 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center p-4 mt-18">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <Link href="/" className="inline-block mb-4">
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
-              Auctra
-            </h1>
-          </Link>
           <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-200">
             {isLogin ? "Welcome Back" : "Create Account"}
           </h2>

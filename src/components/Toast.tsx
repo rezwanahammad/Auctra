@@ -144,7 +144,6 @@ function ToastItem({ toast, onRemove }: ToastItemProps) {
   );
 }
 
-// Convenience functions for common toast types
 export function useToastHelpers() {
   const { addToast } = useToast();
 

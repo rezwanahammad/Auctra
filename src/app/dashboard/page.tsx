@@ -110,7 +110,7 @@ async function getUserDashboardData(userId: string) {
 function formatPrice(price: number): string {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "USD",
+    currency: "BDT",
   }).format(price);
 }
 

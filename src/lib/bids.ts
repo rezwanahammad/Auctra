@@ -61,9 +61,9 @@ export async function placeBid(auctionId: string, bidAmount: number): Promise<Bi
   }
 }
 
-/**
- * Fetch bid history for an auction
- */
+
+ // Fetch bid history for an auction
+
 export async function fetchBidHistory(auctionId: string): Promise<BidHistoryResponse> {
   try {
     const response = await fetch(`/api/auctions/${auctionId}/bids`);

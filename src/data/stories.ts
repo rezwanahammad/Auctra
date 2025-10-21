@@ -61,7 +61,7 @@ Our conservation team spent six weeks carefully cleaning and restoring the panel
 
 ## Auction Day Results
 
-The painting, originally estimated at $15,000-20,000, generated intense bidding from collectors worldwide. The final hammer price of $68,000 reflected not just the work's artistic merit, but the compelling story of its rediscovery.
+The painting, originally estimated at ৳15,000-20,000, generated intense bidding from collectors worldwide. The final hammer price of ৳68,000 reflected not just the work's artistic merit, but the compelling story of its rediscovery.
 
 ## Lessons Learned
 
@@ -104,7 +104,7 @@ Over the next three years, Chowdhury carefully sold pieces from his inherited co
 
 ## The Portfolio Approach
 
-Today, Chowdhury's collection has grown to over 40 pieces, with works ranging from $2,000 to $25,000. His strategy combines emotional connection with market analysis.
+Today, Chowdhury's collection has grown to over 40 pieces, with works ranging from ৳2,000 to ৳25,000. His strategy combines emotional connection with market analysis.
 
 "Every piece should speak to you personally, but you also need to understand why others might value it in the future."
 

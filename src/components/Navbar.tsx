@@ -11,7 +11,6 @@ import {
   LogOut,
   Menu,
   Search,
-  ShoppingBag,
   X,
   Clock,
 } from "lucide-react";
@@ -451,8 +450,8 @@ export default function Navbar() {
                             <span className="text-xs text-slate-400">•</span>
                             <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
                               {result.currentBid > 0
-                                ? `Current: $${result.currentBid.toLocaleString()}`
-                                : `Starting: $${result.startingPrice.toLocaleString()}`}
+                                ? `Current: ৳${result.currentBid.toLocaleString()}`
+                                : `Starting: ৳${result.startingPrice.toLocaleString()}`}
                             </span>
                             {result.status === "active" && (
                               <>

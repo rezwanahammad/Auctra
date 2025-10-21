@@ -14,7 +14,8 @@ interface AuctionData {
   endTime?: Date;
 }
 
-export function useRealTimeAuction({ auctionId, refreshInterval = 10000 }: UseRealTimeAuctionProps) {
+export function useRealTimeAuction({ auctionId, refreshInterval = 10000 }: UseRealTimeAuctionProps) //calls api after every 10 seconds to get latest auction data
+{
   const [auctionData, setAuctionData] = useState<AuctionData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
