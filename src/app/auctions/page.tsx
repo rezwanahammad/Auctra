@@ -173,7 +173,7 @@ export default function AuctionsPage() {
               </div>
             </div>
 
-            <dl className="grid w-full gap-4 sm:grid-cols-3 lg:w-auto">
+            <dl className="grid w-full gap-2 sm:grid-cols-3 lg:w-auto">
               <div className="rounded-2xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:shadow-none">
                 <dt className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">
                   Auctions listed
@@ -190,11 +190,11 @@ export default function AuctionsPage() {
                   {heroStats.active}
                 </dd>
               </div>
-              <div className="rounded-2xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:shadow-none">
+              <div className="min-w-[160px] rounded-2xl border border-slate-200 bg-white/70 p-6  shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:shadow-none ">
                 <dt className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">
                   Bid volume
                 </dt>
-                <dd className="mt-3 text-3xl font-semibold text-slate-900 dark:text-white">
+                <dd className="mt-3 text-2xl font-semibold text-slate-900 dark:text-white">
                   {formatTaka(heroStats.volume)}
                 </dd>
               </div>

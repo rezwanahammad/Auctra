@@ -57,7 +57,7 @@ export default function BiddingPanel({
   const status = auctionData?.status || auction.status;
   const endTime = auctionData?.endTime || auction.endTime;
 
-  const minimumBid = calculateMinimumBid(currentBid, 100); // $100 minimum increment
+  const minimumBid = calculateMinimumBid(currentBid, 100);
   const timeRemaining = endTime
     ? formatTimeRemaining(endTime.toString())
     : "Auction ended";
@@ -121,10 +121,10 @@ export default function BiddingPanel({
           <span className="text-sm font-medium text-slate-600 dark:text-slate-400">
             Current Bid
           </span>
-          <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+          {/* <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
             <Users className="h-4 w-4" />
             <span>{bidders} bidders</span>
-          </div>
+          </div> */}
         </div>
 
         <div className="mb-4">

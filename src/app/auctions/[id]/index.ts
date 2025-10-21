@@ -31,7 +31,7 @@ async function getAuction(req: NextApiRequest, res: NextApiResponse) {
 
     return res.status(200).json({ auction, bids });
   } catch (error) {
-    console.error("❌ Get auction error:", error);
+    console.error("Get auction error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 }

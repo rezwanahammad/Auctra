@@ -52,21 +52,21 @@ async function placeBid(req: NextApiRequest, res: NextApiResponse) {
       return res.status(400).json({ message: `Bid must be at least ${minRequired}` });
     }
 
-    // ✅ Save the bid
+    // Save the bid
     const bid = await Bid.create({
       auctionId,
       bidderId: session.user.id,
       bidAmount,
     });
 
-    // ✅ Update auction
+    // Update auction
     auction.currentBid = bidAmount;
     auction.highestBidderId = session.user.id;
     await auction.save();
 
     return res.status(201).json({ message: "Bid placed successfully", bid });
   } catch (error) {
-    console.error("❌ Bid error:", error);
+    console.error("Bid error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 }

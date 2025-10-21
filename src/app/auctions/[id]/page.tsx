@@ -5,7 +5,6 @@ import Image from "next/image";
 import { dbConnect } from "@/lib/db";
 import Auction from "@/models/Auction";
 import Bid from "@/models/Bid";
-// Import Category model to ensure it's registered with mongoose
 import "@/models/Category";
 
 import AuctionPageClient from "@/app/auctions/[id]/AuctionPageClient";

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import BiddingPanel from "@/components/BiddingPanel";
-import BidHistory from "@/components/BidHistory";
 import BuyNowModal from "@/components/BuyNowModal";
 import { canBuyNow, getBuyNowPrice } from "@/data/marketplace";
 
@@ -32,7 +31,6 @@ interface AuctionPageClientProps {
 }
 
 export default function AuctionPageClient({ auction }: AuctionPageClientProps) {
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [isBuyNowModalOpen, setIsBuyNowModalOpen] = useState(false);
 
   // Create auction object for marketplace functions
@@ -106,8 +104,8 @@ export default function AuctionPageClient({ auction }: AuctionPageClientProps) {
     updatedAt: new Date().toISOString(),
   };
 
-  const handleBidSuccess = (newRefreshTrigger: number) => {
-    setRefreshTrigger(newRefreshTrigger);
+  const handleBidSuccess = () => {
+    // Handle bid success if needed
   };
 
   const handleBuyNowClick = () => {
@@ -116,25 +114,18 @@ export default function AuctionPageClient({ auction }: AuctionPageClientProps) {
 
   const handleBuyNowModalClose = () => {
     setIsBuyNowModalOpen(false);
-    // Refresh the page or redirect after purchase
-    setRefreshTrigger((prev) => prev + 1);
   };
 
   return (
     <>
-      <div className="grid gap-8 lg:grid-cols-3">
+      <div className="grid gap-8">
         {/* Bidding Panel */}
-        <div className="lg:col-span-2">
+        <div>
           <BiddingPanel
             auction={formattedAuction}
             onBidSuccess={handleBidSuccess}
             onBuyNow={auctionCanBuyNow ? handleBuyNowClick : undefined}
           />
-        </div>
-
-        {/* Bid History */}
-        <div className="lg:col-span-1">
-          <BidHistory auctionId={auction.id} refreshTrigger={refreshTrigger} />
         </div>
       </div>
 

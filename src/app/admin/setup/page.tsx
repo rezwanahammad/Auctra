@@ -98,7 +98,7 @@ export default function AdminSetupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4 mt-20">
       <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl">
         {/* Header */}
         <div className="p-8 border-b border-slate-200 dark:border-slate-700 text-center">
