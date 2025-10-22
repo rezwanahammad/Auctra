@@ -26,7 +26,6 @@ const BidPanel: React.FC<BidPanelProps> = ({
       <p>
         Minimum Increment: <span className="font-bold">{minIncrement}</span>
       </p>
-      {/* Add your bid form or logic here */}
       <button
         className="mt-4 rounded bg-blue-600 px-4 py-2 text-white font-semibold hover:bg-blue-700"
         disabled={status !== "active"}

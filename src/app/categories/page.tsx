@@ -35,7 +35,7 @@ export default function CategoriesPage() {
               href="/sell"
               className="rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition-all hover:bg-slate-50 hover:border-slate-400 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:border-slate-500"
             >
-              Consign Your Collection
+              Submit Your Collection
             </Link>
           </div>
         </div>
@@ -83,7 +83,7 @@ export default function CategoriesPage() {
                     Weekly Updates
                   </h3>
                   <p className="text-sm text-slate-600 dark:text-slate-400">
-                    Fresh consignments and new discoveries added to each
+                    Fresh collections and new discoveries added to each
                     category every week.
                   </p>
                 </div>
@@ -96,7 +96,7 @@ export default function CategoriesPage() {
                   </h3>
                   <p className="text-sm text-slate-600 dark:text-slate-400">
                     Secure shipping and delivery to collectors worldwide across
-                    47 countries.
+                    9 countries.
                   </p>
                 </div>
               </div>

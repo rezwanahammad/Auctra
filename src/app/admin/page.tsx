@@ -72,7 +72,7 @@ export default function AdminDashboard() {
     }
 
     if (status === "authenticated") {
-      // Check if user has admin role (you might want to add this check)
+      // Check if user has admin role
       fetchDashboardData();
     }
   }, [status, router]);

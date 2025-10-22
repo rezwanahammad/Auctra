@@ -16,7 +16,6 @@ import {
   Crown,
 } from "lucide-react";
 
-// Fetch real user data with statistics from database
 async function getUserDashboardData(userId: string) {
   await dbConnect();
 
@@ -24,11 +23,9 @@ async function getUserDashboardData(userId: string) {
   const user = await User.findById(userId).select("-hashedPassword");
   if (!user) throw new Error("User not found");
 
-  // Get user's bids and statistics
   const totalBids = await Bid.countDocuments({ bidderId: userId });
   const activeBids = await Bid.countDocuments({
     bidderId: userId,
-    // Add logic to check if auction is still active
   });
 
   // Get recent bids with auction info
@@ -37,12 +34,10 @@ async function getUserDashboardData(userId: string) {
     .sort({ createdAt: -1 })
     .limit(5);
 
-  // Calculate won auctions (auctions where user has the highest bid)
   const wonAuctions = await Auction.countDocuments({
     highestBidderId: userId,
   });
 
-  // Get recent won auctions with details (where user has highest bid)
   const recentWonAuctions = await Auction.find({
     highestBidderId: userId,
   })
@@ -50,7 +45,6 @@ async function getUserDashboardData(userId: string) {
     .sort({ updatedAt: -1 })
     .limit(5);
 
-  // For sellers, get their auctions
   let sellerStats = null;
   if (user.role === "seller") {
     const totalListings = await Auction.countDocuments({ sellerId: userId });
@@ -85,7 +79,7 @@ async function getUserDashboardData(userId: string) {
       totalBids,
       activeBids,
       wonAuctions,
-      watchlist: 0, // Implement watchlist functionality later
+      watchlist: 0, 
     },
     sellerStats,
     recentActivity: recentBids.map((bid) => ({
@@ -440,7 +434,6 @@ export default async function DashboardPage() {
             </div>
           </div>
 
-          {/* Quick Actions */}
           <div className="space-y-6">
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
               <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">

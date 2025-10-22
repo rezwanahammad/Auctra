@@ -19,7 +19,6 @@ function formatPrice(price: number): string {
   }).format(price);
 }
 
-// Note: Removed generateStaticParams since auction data is dynamic
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const { id } = await params;
@@ -58,7 +57,6 @@ export default async function BuyNowItemPage({
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-white text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100 pt-20">
-      {/* Breadcrumb */}
       <div className="mx-auto max-w-6xl px-6 py-8 sm:px-8">
         <nav className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
           <Link
@@ -92,7 +90,6 @@ export default async function BuyNowItemPage({
       {/* Item Details */}
       <div className="mx-auto max-w-6xl px-6 pb-16 sm:px-8">
         <div className="grid gap-12 lg:grid-cols-2">
-          {/* Images */}
           <div className="space-y-4">
             <div className="relative h-96 sm:h-[500px] overflow-hidden rounded-2xl">
               <Image
@@ -260,7 +257,6 @@ export default async function BuyNowItemPage({
               </div>
             </div>
 
-            {/* Guarantees */}
             <div className="rounded-2xl border border-slate-200 bg-slate-50/50 p-4 dark:border-slate-700 dark:bg-slate-800/50">
               <div className="grid gap-3 text-sm">
                 <div className="flex items-center gap-3">

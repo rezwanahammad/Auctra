@@ -7,7 +7,6 @@ export default function RegisterPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirect to the unified auth page
     router.replace("/auth/signin");
   }, [router]);
 

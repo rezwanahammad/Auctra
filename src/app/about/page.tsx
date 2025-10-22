@@ -101,7 +101,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      {/* How It Works Section */}
       <section className="py-20 bg-slate-50/50 dark:bg-slate-900/50">
         <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-10">
           <div className="text-center mb-16">

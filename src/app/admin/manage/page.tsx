@@ -93,7 +93,6 @@ export default function AdminManagementPage() {
     if (status === "authenticated") {
       fetchData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, router, activeTab]);
 
   const fetchData = async () => {
@@ -332,7 +331,6 @@ export default function AdminManagementPage() {
             ))}
           </div>
 
-          {/* Filters */}
           <div className="p-6 border-b border-slate-200 dark:border-slate-700">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1">

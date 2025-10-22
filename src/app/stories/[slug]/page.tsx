@@ -49,14 +49,12 @@ export default async function StoryPage({
     notFound();
   }
 
-  // Get related stories (same category, excluding current story)
   const relatedStories = stories
     .filter((s) => s.category === story.category && s.slug !== story.slug)
     .slice(0, 2);
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-white text-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100 pt-20">
-      {/* Breadcrumb */}
       <div className="mx-auto max-w-4xl px-6 py-8 sm:px-8">
         <nav className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
           <Link
@@ -79,7 +77,6 @@ export default async function StoryPage({
         </nav>
       </div>
 
-      {/* Story Header */}
       <article className="mx-auto max-w-4xl px-6 sm:px-8">
         <header className="mb-8">
           <div className="mb-4">
@@ -120,7 +117,6 @@ export default async function StoryPage({
           />
         </div>
 
-        {/* Story Content */}
         <div className="prose prose-slate max-w-none dark:prose-invert prose-headings:tracking-tight prose-a:text-slate-900 prose-a:no-underline hover:prose-a:underline dark:prose-a:text-slate-100">
           {story.content?.split("\n").map((paragraph, index) => {
             if (paragraph.trim() === "") return <br key={index} />;

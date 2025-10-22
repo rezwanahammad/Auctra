@@ -33,7 +33,6 @@ interface AuctionPageClientProps {
 export default function AuctionPageClient({ auction }: AuctionPageClientProps) {
   const [isBuyNowModalOpen, setIsBuyNowModalOpen] = useState(false);
 
-  // Create auction object for marketplace functions
   const auctionForMarketplace = {
     _id: auction.id,
     status: auction.status,
@@ -63,11 +62,9 @@ export default function AuctionPageClient({ auction }: AuctionPageClientProps) {
     updatedAt: new Date(),
   };
 
-  // Check if this auction can be bought now
   const auctionCanBuyNow = canBuyNow(auctionForMarketplace);
   const buyNowPrice = getBuyNowPrice(auctionForMarketplace);
 
-  // Convert auction data to format expected by BiddingPanel
   const formattedAuction = {
     id: auction.id,
     title: auction.title,

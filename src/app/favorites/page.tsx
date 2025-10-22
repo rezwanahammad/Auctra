@@ -77,7 +77,6 @@ export default function FavoritesPage() {
         throw new Error("Failed to remove favorite");
       }
 
-      // Remove from local state
       setFavorites((prev) =>
         prev.filter((fav) => fav.auction.id !== auctionId)
       );

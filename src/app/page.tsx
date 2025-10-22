@@ -71,7 +71,7 @@ export default function HomePage() {
                 href="/sell"
                 className="rounded-full border border-white/40 px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base font-semibold text-white transition-all hover:border-white hover:bg-white/10 hover:backdrop-blur-sm text-center"
               >
-                Consign a collection
+                Submit a collection
               </Link>
             </div>
           </div>

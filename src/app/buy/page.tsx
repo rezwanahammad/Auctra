@@ -116,7 +116,6 @@ export default function BuyNowPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Set document title for client component
     document.title = "Buy Now | Auctra - Immediate Purchase Available";
 
     async function fetchItems() {
@@ -140,7 +139,6 @@ export default function BuyNowPage() {
   const handleModalClose = () => {
     setIsModalOpen(false);
     setSelectedItem(null);
-    // Refresh items to update availability
     getAuctionsForBuyNow().then(setItems).catch(console.error);
   };
 
@@ -286,7 +284,6 @@ export default function BuyNowPage() {
         )}
       </section>
 
-      {/* Benefits */}
       <section className="mx-auto max-w-6xl px-6 py-16 sm:px-8 lg:px-10">
         <div className="rounded-2xl border border-slate-200 bg-white/80 p-8 backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/80">
           <h2 className="mb-6 text-2xl font-semibold text-slate-900 dark:text-slate-100">
@@ -341,7 +338,6 @@ export default function BuyNowPage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="mx-auto max-w-4xl px-6 py-16 text-center sm:px-8 lg:px-10">
         <div className="rounded-2xl bg-gradient-to-r from-slate-900 to-slate-800 p-8 text-white dark:from-slate-100 dark:to-slate-200 dark:text-slate-900">
           <h2 className="text-2xl font-semibold">

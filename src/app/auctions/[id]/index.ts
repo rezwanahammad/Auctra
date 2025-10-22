@@ -24,7 +24,6 @@ async function getAuction(req: NextApiRequest, res: NextApiResponse) {
       return res.status(404).json({ message: "Auction not found" });
     }
 
-    // ✅ Also fetch latest bids
     const bids = await Bid.find({ auctionId: id })
       .populate("bidderId", "username email")
       .sort({ createdAt: -1 });
